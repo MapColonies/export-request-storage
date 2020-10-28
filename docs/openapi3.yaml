@@ -1,0 +1,124 @@
+openapi: 3.0.1
+info:
+  title: Image Indexer Service
+  description: api for cataloging raster location and metadata
+  version: 1.0.0
+servers:
+  - url: http://localhost:1337
+paths:
+  /images:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-CreateDb.json"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - images
+    put:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-Update.json"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - images
+  "/images/{id}":
+    get:
+      parameters:
+        - $ref: "#/components/parameters/idParam"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - images
+    delete:
+      parameters:
+        - $ref: "#/components/parameters/idParam"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - images
+  "/images/exists/{id}":
+    get:
+      parameters:
+        - $ref: "#/components/parameters/idParam"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - images
+  "/images/search":
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/searchOptions"
+      responses:
+        "200":
+          description: "list of matching image metadatas"
+          content:
+            application/json:
+              schema:
+                $ref: "http://localhost/Schema/Http/ImageMetadataArrayResponse.json"
+      tags:
+        - images
+components:
+  parameters:
+    idParam:
+      name: id
+      in: path
+      description: id of requested item
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    searchOptions:
+      type: object
+      properties:
+        geometry:
+          type: object
+          oneOf:
+            - $ref: "http://localhost/Schema/geojson/Point.json"
+            - $ref: "http://localhost/Schema/geojson/Polygon.json"
+          example: { "type": "Point", "coordinates": [125.6, 10.1] }
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        sort:
+          type: object
+          properties:
+            orderBy:
+              type: string
+              enum:
+                - imagingTime
+            desc:
+              type: boolean
+              example: true
+          required:
+            - desc
+            - orderBy
+        pageSize:
+          type: integer
+          maximum: 10000
+          minimum: 1
+          example: 30
+        offset:
+          type: integer
+          minimum: 0
+          example: 60
