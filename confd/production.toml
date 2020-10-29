@@ -3,8 +3,8 @@ src = "production.tmpl"
 dest = "/config/production.json"
 keys = [
     "/configuration/logger/level",
-    "/configuration/swagger/jsonPath",
-    "/configuration/swagger/uiPath",
+    "/configuration/swagger/json/path",
+    "/configuration/swagger/ui/path",
     "/configuration/db/type",
     "/configuration/db/host",
     "/configuration/db/port",
@@ -13,5 +13,5 @@ keys = [
     "/configuration/db/database",
     "/configuration/db/synchronize",
     "/configuration/db/logging",
-    "/configuration/search/defaultPageSize"
+    "/configuration/search/default/page/size"
 ]

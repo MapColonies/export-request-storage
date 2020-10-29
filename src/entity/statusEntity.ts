@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
-@Entity("statuses")
+@Entity('statuses')
 @Index(['fileName', 'directoryName'], { unique: true })
 export class StatusEntity {
   @PrimaryGeneratedColumn()
@@ -11,7 +11,7 @@ export class StatusEntity {
   public taskId: string;
 
   @Column()
-  @Index({ unique: true })
+  @Index()
   public userId: string;
 
   @Column()
@@ -38,13 +38,13 @@ export class StatusEntity {
   @Column()
   public realFileSize: string;
 
-  @Column()
-  public creationTime: string;
+  @Column('timestamp with time zone')
+  public creationTime: Date;
 
-  @Column()
+  @Column('timestamp with time zone')
   public lastUpdatedTime: string;
 
-  @Column()
+  @Column('timestamp with time zone')
   public expirationTime: string;
 
   public constructor(init?: Partial<StatusEntity>) {

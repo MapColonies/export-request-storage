@@ -2,7 +2,7 @@ import { Repository, EntityRepository, SelectQueryBuilder } from 'typeorm';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import config from 'config';
-import { StatusEntity } from '../entity/StatusEntity';
+import { StatusEntity } from '../entity/statusEntity';
 
 @EntityRepository(StatusEntity)
 export class StatusesRepository extends Repository<StatusEntity> {
@@ -15,8 +15,15 @@ export class StatusesRepository extends Repository<StatusEntity> {
     this.defaultSearchPageSize = config.get<number>('search.defaultPageSize');
   }
 
-  public async get(id: string) : Promise<StatusEntity | undefined> {
+  public async getAll(): Promise<StatusEntity[]> {
+    return this.find();
+  }
+
+  public async get(id: string): Promise<StatusEntity | undefined> {
     return this.findOne({ taskId: id });
   }
 
+  public async exists(taskId: string): Promise<boolean> {
+    return (await this.get(taskId) !== undefined);
+  }
 }

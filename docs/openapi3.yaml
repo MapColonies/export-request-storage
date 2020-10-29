@@ -1,53 +1,80 @@
 openapi: 3.0.1
 info:
-  title: Image Indexer Service
-  description: api for cataloging raster location and metadata
+  title: Requests Status Indexer Service
+  description: API for export requests statuses
   version: 1.0.0
 servers:
   - url: http://localhost:1337
 paths:
-  # /images:
-  #   post:
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-CreateDb.json"
-  #     responses:
-  #       "201":
-  #         description: ""
-  #     tags:
-  #       - images
-  #   put:
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-Update.json"
-  #     responses:
-  #       "200":
-  #         description: ""
-  #     tags:
-  #       - images
-  /statuses/{id}:
+  /statuses:
     get:
+      tags:
+        - statuses
+      summary: Get all statuses from the database.
+      responses:
+        200:
+          description: All statuses.
+        404:
+          description: No statuses in the database.
+        400:
+          description: Invalid request, could not retrieve statuses.              
+    post:
+      summary: Creates a new status in the table.
+      tags:
+        - statuses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/statusRequest"
+      responses:
+        200:
+          description: Status created succesfully.
+        400:
+          description: Invalid request, could not retrieve statuses.
+    put:
+      summary: Updates an existing record from the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/statusRequest"
+      responses:
+        200:
+          description: Status updated succesfully.
+        400:
+          description: Invalid request, could not retrieve statuses.
+      tags:
+        - statuses
+  /statuses/{taskId}:
+    get:
+      summary: Get a single status from the databsae.
       parameters:
         - $ref: "#/components/parameters/idParam"
       responses:
-        "200":
-          description: ""
+        200:
+          description: The requested status.
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
       tags:
-        - images
-    # delete:
-    #   parameters:
-    #     - $ref: "#/components/parameters/idParam"
-    #   responses:
-    #     "200":
-    #       description: ""
-    #   tags:
-    #     - images
+        - statuses
+    delete:
+      summary: Delete a single status from the repository.
+      parameters:
+        - $ref: "#/components/parameters/idParam"
+      responses:
+        200:
+          description: The status was deleted succesfully.
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
+      tags:
+        - statuses
 #   "/images/exists/{id}":
 #     get:
 #       parameters:
@@ -77,48 +104,80 @@ paths:
 components:
   parameters:
     idParam:
-      name: id
+      name: taskId
       in: path
       description: id of requested item
       required: true
       schema:
         type: string
         format: uuid
-#   schemas:
-#     searchOptions:
-#       type: object
-#       properties:
-#         geometry:
-#           type: object
-#           oneOf:
-#             - $ref: "http://localhost/Schema/geojson/Point.json"
-#             - $ref: "http://localhost/Schema/geojson/Polygon.json"
-#           example: { "type": "Point", "coordinates": [125.6, 10.1] }
-#         startDate:
-#           type: string
-#           format: date
-#         endDate:
-#           type: string
-#           format: date
-#         sort:
-#           type: object
-#           properties:
-#             orderBy:
-#               type: string
-#               enum:
-#                 - imagingTime
-#             desc:
-#               type: boolean
-#               example: true
-#           required:
-#             - desc
-#             - orderBy
-#         pageSize:
-#           type: integer
-#           maximum: 10000
-#           minimum: 1
-#           example: 30
-#         offset:
-#           type: integer
-#           minimum: 0
-#           example: 60
+  schemas:
+    statusRequest:
+      type: object
+      properties:
+        taskId:
+          type: string
+        userId: 
+          type: string
+        fileName: 
+          type: string
+        directoryName: 
+          type: string
+        fileURI: 
+          type: string
+        progress: 
+          type: integer
+        status: 
+          type: string
+        bbox: 
+          type: string
+        estimatedFileSize: 
+          type: string
+        realFileSize: 
+          type: string
+        creationTime: 
+          type: string
+          format: date
+        lastUpdatedTime: 
+          type: string
+          format: date
+        expirationTime: 
+          type: string
+          format: date
+    # searchOptions:
+    #   type: object
+    #   properties:
+    #     geometry:
+    #       type: object
+    #       oneOf:
+    #         - $ref: "http://localhost/Schema/geojson/Point.json"
+    #         - $ref: "http://localhost/Schema/geojson/Polygon.json"
+    #       example: { "type": "Point", "coordinates": [125.6, 10.1] }
+    #     startDate:
+    #       type: string
+    #       format: date
+    #     endDate:
+    #       type: string
+    #       format: date
+    #     sort:
+    #       type: object
+    #       properties:
+    #         orderBy:
+    #           type: string
+    #           enum:
+    #             - imagingTime
+    #         desc:
+    #           type: boolean
+    #           example: true
+    #       required:
+    #         - desc
+    #         - orderBy
+    #     pageSize:
+    #       type: integer
+    #       maximum: 10000
+    #       minimum: 1
+    #       example: 30
+    #     offset:
+    #       type: integer
+    #       minimum: 0
+    #       example: 60
