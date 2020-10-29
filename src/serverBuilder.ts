@@ -3,7 +3,7 @@ import { initAsync as validatorInit } from 'openapi-validator-middleware';
 import { MCLogger } from '@map-colonies/mc-logger';
 import { injectable } from 'tsyringe';
 import { json as jsonParser } from 'body-parser';
-import { RequestLogger } from './middleware/requestLogger';
+import { RequestLogger } from './middleware/RequestLogger';
 import { ErrorHandler } from './middleware/errorHandler';
 import { globalRouter } from './routers/global';
 

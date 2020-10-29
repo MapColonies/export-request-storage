@@ -3,7 +3,7 @@ import config from 'config';
 import { delay, inject, injectable } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { ImageDataRepository } from './imageDataRepository';
+import { StatusesRepository } from './statusesRepository';
 
 @injectable()
 export class ConnectionManager {
@@ -33,8 +33,8 @@ export class ConnectionManager {
     return this.connection !== undefined;
   }
 
-  public getImageDataRepository(): ImageDataRepository {
-    return this.getRepository(ImageDataRepository);
+  public getStatusRepository(): StatusesRepository {
+    return this.getRepository(StatusesRepository);
   }
 
   private getRepository<T>(repository: ObjectType<T>): T {

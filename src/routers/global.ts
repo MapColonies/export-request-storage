@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { ImagesRouter } from './images';
+import { StatusRouter } from './statuses';
 import { swaggerRouter } from './swagger';
 
 const globalRouter = Router();
 globalRouter.use(swaggerRouter);
-globalRouter.use('/images', ImagesRouter);
+globalRouter.use('/statuses', StatusRouter);
 
 export { globalRouter };

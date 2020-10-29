@@ -8,11 +8,11 @@
   },
   "typeOrm": {
       "type": "{{ getv "/configuration/db/type" "postgres" }}",
-      "host": "{{ getv "/configuration/db/host" "localhost" }}",
+      "host": "{{ getv "/configuration/db/host" "10.28.11.80" }}",
       "port": {{ getv "/configuration/db/port" "5432" }},
-      "username": "{{ getv "/configuration/db/username" "test" }}",
-      "password": "{{ getv "/configuration/db/password" "test" }}",
-      "database": "{{ getv "/configuration/db/database" "test" }}",
+      "username": "{{ getv "/configuration/db/username" "export_request_admin" }}",
+      "password": "{{ getv "/configuration/db/password" "1234" }}",
+      "database": "{{ getv "/configuration/db/database" "export-request" }}",
       "synchronize": {{ getv "/configuration/db/synchronize" "true" }},
       "logging": {{ getv "/configuration/db/logging" "false" }},
       "entities": [
