@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Geometry } from 'geojson';
 
 @Entity('statuses')
 @Index(['fileName', 'directoryName'], { unique: true })
@@ -29,8 +30,12 @@ export class StatusEntity {
   @Column()
   public status: string;
 
-  @Column()
-  public bbox: string;
+  @Column('geometry', {
+    spatialFeatureType: 'Geometry',
+    srid: 4326,
+  })
+  @Index({ spatial: true })
+  public geometry: Geometry;
 
   @Column()
   public estimatedFileSize: string;
@@ -39,12 +44,13 @@ export class StatusEntity {
   public realFileSize: string;
 
   @Column('timestamp with time zone')
-  public creationTime: Date;
+  public creationTime: string;
 
   @Column('timestamp with time zone')
-  public lastUpdatedTime: string;
+  public updatedTime: string;
 
   @Column('timestamp with time zone')
+  @Index()
   public expirationTime: string;
 
   public constructor(init?: Partial<StatusEntity>) {

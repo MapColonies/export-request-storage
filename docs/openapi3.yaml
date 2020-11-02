@@ -129,8 +129,12 @@ components:
           type: integer
         status: 
           type: string
-        bbox: 
-          type: string
+        geometry: 
+          type: object
+          oneOf:
+            - $ref: "http://localhost:8080/Schema/geojson/Point.json"
+            - $ref: "http://localhost:8080/Schema/geojson/Polygon.json"
+          example: { "type": "Point", "coordinates": [125.6, 10.1] }
         estimatedFileSize: 
           type: string
         realFileSize: 
@@ -144,40 +148,3 @@ components:
         expirationTime: 
           type: string
           format: date
-    # searchOptions:
-    #   type: object
-    #   properties:
-    #     geometry:
-    #       type: object
-    #       oneOf:
-    #         - $ref: "http://localhost/Schema/geojson/Point.json"
-    #         - $ref: "http://localhost/Schema/geojson/Polygon.json"
-    #       example: { "type": "Point", "coordinates": [125.6, 10.1] }
-    #     startDate:
-    #       type: string
-    #       format: date
-    #     endDate:
-    #       type: string
-    #       format: date
-    #     sort:
-    #       type: object
-    #       properties:
-    #         orderBy:
-    #           type: string
-    #           enum:
-    #             - imagingTime
-    #         desc:
-    #           type: boolean
-    #           example: true
-    #       required:
-    #         - desc
-    #         - orderBy
-    #     pageSize:
-    #       type: integer
-    #       maximum: 10000
-    #       minimum: 1
-    #       example: 30
-    #     offset:
-    #       type: integer
-    #       minimum: 0
-    #       example: 60

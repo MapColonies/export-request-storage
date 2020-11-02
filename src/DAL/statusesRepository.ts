@@ -16,7 +16,11 @@ export class StatusesRepository extends Repository<StatusEntity> {
   }
 
   public async getAll(): Promise<StatusEntity[]> {
-    return this.find();
+    return this.find({
+      order: {
+        updatedTime: "ASC"
+      }
+    });
   }
 
   public async get(id: string): Promise<StatusEntity | undefined> {

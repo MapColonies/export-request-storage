@@ -1,3 +1,5 @@
+import { Geometry } from "geojson";
+
 export interface StatusData {
     taskId: string;
     userId?: string;
@@ -6,7 +8,7 @@ export interface StatusData {
     fileURI?: string;
     progress?: number;
     status?: string;
-    bbox?: string;
+    geometry?: Geometry;
     estimatedFileSize?: string;
     realFileSize?: string;
     creationTime?: string;
