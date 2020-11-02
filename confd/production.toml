@@ -5,6 +5,7 @@ keys = [
     "/configuration/logger/level",
     "/configuration/swagger/json/path",
     "/configuration/swagger/ui/path",
+    "/configuration/swagger/port",
     "/configuration/db/type",
     "/configuration/db/host",
     "/configuration/db/port",

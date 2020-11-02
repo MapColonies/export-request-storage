@@ -4,7 +4,7 @@ info:
   description: API for export requests statuses
   version: 1.0.0
 servers:
-  - url: http://localhost:1337
+  - url: http://localhost:80/
 paths:
   /statuses:
     get:
@@ -75,32 +75,6 @@ paths:
           description: Status was not found.
       tags:
         - statuses
-#   "/images/exists/{id}":
-#     get:
-#       parameters:
-#         - $ref: "#/components/parameters/idParam"
-#       responses:
-#         "200":
-#           description: ""
-#       tags:
-#         - images
-#   "/images/search":
-#     post:
-#       requestBody:
-#         required: true
-#         content:
-#           application/json:
-#             schema:
-#               $ref: "#/components/schemas/searchOptions"
-#       responses:
-#         "200":
-#           description: "list of matching image metadatas"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "http://localhost/Schema/Http/ImageMetadataArrayResponse.json"
-#       tags:
-#         - images
 components:
   parameters:
     idParam:
@@ -132,9 +106,6 @@ components:
           type: string
         geometry: 
           type: object
-          oneOf:
-            - $ref: "http://localhost:8080/Schema/geojson/Point.json"
-            - $ref: "http://localhost:8080/Schema/geojson/Polygon.json"
           example: { "type": "Point", "coordinates": [125.6, 10.1] }
         estimatedFileSize: 
           type: string
