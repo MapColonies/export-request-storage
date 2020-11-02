@@ -28,3 +28,4 @@ jobs:
           # Enable linters
           eslint: true
           eslint_extensions: ts,tsx
+          

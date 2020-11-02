@@ -32,3 +32,4 @@ jobs:
          tags: exporter-worker:latest
      #- name: Image digest
      #  run: echo ${{ steps.docker_build.outputs.digest }}
+     
