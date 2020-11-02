@@ -11,5 +11,7 @@ statusRouter.post('/', validate, controller.create.bind(controller));
 statusRouter.get('/:taskId', validate, controller.get.bind(controller));
 statusRouter.put('/', validate, controller.update.bind(controller));
 statusRouter.delete('/:taskId', validate, controller.delete.bind(controller));
+statusRouter.get('/user/:userId', validate, controller.getStatusesByUserId.bind(controller));
+statusRouter.get('/expired/:date', validate, controller.getStatusesAfterExpiredDate.bind(controller));
 
 export { statusRouter as StatusRouter };

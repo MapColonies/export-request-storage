@@ -18,7 +18,7 @@ paths:
         required: false
         schema:
           type: string
-          enum: [ASC, DESC, 1, -1]
+          enum: [ASC, DESC]
       responses:
         200:
           description: All statuses.
@@ -91,6 +91,54 @@ paths:
           description: Status was not found.
       tags:
         - statuses
+  /statuses/user/{userId}:
+    get:
+      summary: Get all statuses by user ID.
+      parameters:
+      - in: path
+        name: userId
+        description: The ID of the user.
+        required: true
+        schema:
+          type: string
+          format: date 
+      responses:
+        200:
+          description: All statuses by this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusRequest'
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
+      tags:
+        - statuses    
+  /statuses/expired/{date}:
+    get:
+      summary: Get all statuses that expired after the specified date.
+      parameters:
+      - in: path
+        name: date
+        description: Expiration date to search for statuses expired after it.
+        required: true
+        schema:
+          type: string
+          format: date    
+      responses:
+        200:
+          description: All statuses by this user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusRequest'
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
+      tags:
+        - statuses    
 components:
   parameters:
     idParam:
@@ -100,7 +148,7 @@ components:
       required: true
       schema:
         type: string
-        format: uuid
+        format: uuid       
   schemas:
     statusRequest:
       type: object

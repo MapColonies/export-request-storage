@@ -16,7 +16,7 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const updatedTime : SearchOrder = req.query.updatedTime as SearchOrder;
+      const updatedTime: SearchOrder = req.query.updatedTime as SearchOrder;
       const data = await this.service.getAll(updatedTime);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
@@ -45,8 +45,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const status : StatusData = req.body as StatusData;
-      const data : InsertResult = await this.service.create(status);
+      const status: StatusData = req.body as StatusData;
+      const data: InsertResult = await this.service.create(status);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -59,8 +59,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const status : StatusData = req.body as StatusData;
-      const data : UpdateResult = await this.service.update(status);
+      const status: StatusData = req.body as StatusData;
+      const data: UpdateResult = await this.service.update(status);
       
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
@@ -76,6 +76,35 @@ export class StatusController {
     try {
       const taskId: string = req.params.taskId;
       const data = await this.service.delete(taskId);
+      return res.status(httpStatus.OK).json(data);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  public async getStatusesByUserId(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    try {
+      const userId: string = req.params.userId;
+      const updatedTime: SearchOrder = req.query.updatedTime as SearchOrder;
+      const data = await this.service.statusesByUserId(userId, updatedTime);
+      return res.status(httpStatus.OK).json(data);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  public async getStatusesAfterExpiredDate(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    try {;
+      const date: string = req.params.date;
+      const data = await this.service.statusesAfterExpiredDate(date);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);

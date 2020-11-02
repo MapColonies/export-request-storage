@@ -1,4 +1,4 @@
-import { Repository, EntityRepository } from 'typeorm';
+import { Repository, EntityRepository, MoreThan } from 'typeorm';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import config from 'config';
@@ -16,15 +16,39 @@ export class StatusesRepository extends Repository<StatusEntity> {
     this.defaultSearchPageSize = config.get<number>('search.defaultPageSize');
   }
 
-  public async getAll(updatedTime: SearchOrder): Promise<StatusEntity[]> {
+  public async getAll(updatedTimeOrder: SearchOrder): Promise<StatusEntity[]> {
     return this.find({
       order: {
-        updatedTime
-      }
+        updatedTime: updatedTimeOrder,
+      },
     });
   }
 
   public async get(id: string): Promise<StatusEntity | undefined> {
     return this.findOne({ taskId: id });
+  }
+
+  public async statusesByUserId(
+    userId: string,
+    updatedTimeOrder: SearchOrder
+  ): Promise<StatusEntity[]> {
+    return this.find({
+      where: {
+        userId,
+      },
+      order: {
+        updatedTime: updatedTimeOrder,
+      },
+    });
+  }
+
+  public async statusesAfterExpiredDate(
+    date: string,
+  ): Promise<StatusEntity[]> {
+    return this.find({
+      where: {
+        expirationTime: MoreThan(date)
+      },
+    });
   }
 }

@@ -12,15 +12,15 @@ export class StatusService {
   private repository?: StatusesRepository;
   public constructor(private readonly connectionManager: ConnectionManager) {}
 
-  public async getAll(updatedTime : SearchOrder): Promise<StatusEntity[]> {
-    const defaultValue : SearchOrder = "DESC";
-    const options : SearchOrder[] = ["ASC", "DESC", 1, -1]; // eslint-disable-line
-    if (!options.includes(updatedTime)) {
-      updatedTime = defaultValue;
+  public async getAll(updatedTimeOrder: SearchOrder): Promise<StatusEntity[]> {
+    const defaultValue: SearchOrder = "DESC";
+    const options: SearchOrder[] = ["ASC", "DESC"];
+    if (!options.includes(updatedTimeOrder)) {
+      updatedTimeOrder = defaultValue;
     }
 
     const repository: StatusesRepository = await this.getRepository();
-    const statuses: StatusEntity[] = await repository.getAll(updatedTime);
+    const statuses: StatusEntity[] = await repository.getAll(updatedTimeOrder);
 
     return statuses;
   }
@@ -53,6 +53,18 @@ export class StatusService {
     const repository: StatusesRepository = await this.getRepository();
     const deletedStatus: DeleteResult = await repository.delete({ taskId });
     return deletedStatus;
+  }
+
+  public async statusesByUserId(userId: string, updatedTimeOrder: SearchOrder): Promise<StatusEntity[]> {
+    const repository: StatusesRepository = await this.getRepository();
+    const statusesByUserId: StatusEntity[] = await repository.statusesByUserId(userId, updatedTimeOrder);
+    return statusesByUserId;
+  }
+
+  public async statusesAfterExpiredDate(date: string): Promise<StatusEntity[]> {
+    const repository: StatusesRepository = await this.getRepository();
+    const statusesByUserId: StatusEntity[] = await repository.statusesAfterExpiredDate(date);
+    return statusesByUserId;
   }
 
   private async getRepository(): Promise<StatusesRepository> {

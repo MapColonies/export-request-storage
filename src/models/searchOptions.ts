@@ -1,1 +1,1 @@
-export type SearchOrder = "ASC" | "DESC" | 1 | -1;
+export type SearchOrder = "ASC" | "DESC";
