@@ -14,6 +14,10 @@ paths:
       responses:
         200:
           description: All statuses.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusRequest'
         404:
           description: No statuses in the database.
         400:
@@ -56,6 +60,10 @@ paths:
       responses:
         200:
           description: The requested status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/statusRequest'
         400:
           description: Invalid request, could not retrieve statuses.
         404:
@@ -94,23 +102,31 @@ components:
           format: uuid
         userId: 
           type: string
+          example: "328965"
         fileName: 
           type: string
+          example: "testFile"
         directoryName: 
           type: string
+          example: "testDir"
         fileURI: 
           type: string
+          example: "../testDir/testFile"
         progress: 
           type: integer
+          example: "44"
         status: 
           type: string
+          example: "In Progress"
         geometry: 
           type: object
           example: { "type": "Point", "coordinates": [125.6, 10.1] }
         estimatedFileSize: 
           type: string
+          example: "10.5GB"
         realFileSize: 
           type: string
+          example: "10.4GB"
         creationTime: 
           type: string
           format: date
@@ -120,3 +136,4 @@ components:
         expirationTime: 
           type: string
           format: date
+          example: "2020-12-30"
