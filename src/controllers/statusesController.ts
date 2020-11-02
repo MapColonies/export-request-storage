@@ -3,6 +3,7 @@ import httpStatus from 'http-status-codes';
 import { injectable } from 'tsyringe';
 import { StatusService } from '../services/statusesService';
 import { StatusData } from '../models/statusData';
+import { InsertResult, UpdateResult } from 'typeorm';
 
 @injectable()
 export class StatusController {
@@ -43,7 +44,11 @@ export class StatusController {
   ): Promise<Response | void> {
     try {
       const status : StatusData = req.body;
-      const data = await this.service.create(status);
+      const result : InsertResult = await this.service.create(status);
+      const data = {
+        id: result.identifiers[0].id,
+        taskId: status.taskId
+      }
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -57,7 +62,8 @@ export class StatusController {
   ): Promise<Response | void> {
     try {
       const status : StatusData = req.body;
-      const data = await this.service.update(status);
+      const data : UpdateResult = await this.service.update(status);
+      
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);

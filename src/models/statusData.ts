@@ -12,6 +12,6 @@ export interface StatusData {
     estimatedFileSize?: string;
     realFileSize?: string;
     creationTime?: string;
-    lastUpdatedTime?: string;
+    updatedTime?: string;
     expirationTime?: string;
 }
