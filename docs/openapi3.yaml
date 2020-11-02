@@ -101,7 +101,6 @@ paths:
         required: true
         schema:
           type: string
-          format: date 
       responses:
         200:
           description: All statuses by this user.
