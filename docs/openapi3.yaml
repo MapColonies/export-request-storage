@@ -11,6 +11,14 @@ paths:
       tags:
         - statuses
       summary: Get all statuses from the database.
+      parameters:
+      - in: query
+        name: updatedTime
+        description: Order by ascending or descending updated date. Default is descending.
+        required: false
+        schema:
+          type: string
+          enum: [ASC, DESC, 1, -1]
       responses:
         200:
           description: All statuses.
@@ -114,7 +122,7 @@ components:
           example: "../testDir/testFile"
         progress: 
           type: integer
-          example: "44"
+          example: 44
         status: 
           type: string
           example: "In Progress"

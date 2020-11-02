@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status-codes';
 import { injectable } from 'tsyringe';
+import { InsertResult, UpdateResult } from 'typeorm';
 import { StatusService } from '../services/statusesService';
 import { StatusData } from '../models/statusData';
-import { InsertResult, UpdateResult } from 'typeorm';
+import { SearchOrder } from '../models/searchOptions';
 
 @injectable()
 export class StatusController {
@@ -15,7 +16,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const data = await this.service.getAll();
+      const updatedTime : SearchOrder = req.query.updatedTime as SearchOrder;
+      const data = await this.service.getAll(updatedTime);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -43,12 +45,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const status : StatusData = req.body;
-      const result : InsertResult = await this.service.create(status);
-      const data = {
-        id: result.identifiers[0].id,
-        taskId: status.taskId
-      }
+      const status : StatusData = req.body as StatusData;
+      const data : InsertResult = await this.service.create(status);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -61,7 +59,7 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const status : StatusData = req.body;
+      const status : StatusData = req.body as StatusData;
       const data : UpdateResult = await this.service.update(status);
       
       return res.status(httpStatus.OK).json(data);

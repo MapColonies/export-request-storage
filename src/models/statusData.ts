@@ -11,7 +11,7 @@ export interface StatusData {
     geometry?: Geometry;
     estimatedFileSize?: string;
     realFileSize?: string;
-    creationTime?: string;
-    updatedTime?: string;
-    expirationTime?: string;
+    creationTime?: Date;
+    updatedTime?: Date;
+    expirationTime?: Date;
 }

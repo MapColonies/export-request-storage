@@ -11,7 +11,5 @@ statusRouter.post('/', validate, controller.create.bind(controller));
 statusRouter.get('/:taskId', validate, controller.get.bind(controller));
 statusRouter.put('/', validate, controller.update.bind(controller));
 statusRouter.delete('/:taskId', validate, controller.delete.bind(controller));
-// statusRouter.get('/exists/:id', validate, controller.exists.bind(controller));
-// statusRouter.post('/search', validate, controller.search.bind(controller));
 
 export { statusRouter as StatusRouter };

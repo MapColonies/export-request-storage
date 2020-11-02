@@ -44,14 +44,14 @@ export class StatusEntity {
   public realFileSize: string;
 
   @Column('timestamp with time zone')
-  public creationTime: string;
+  public creationTime: Date;
 
   @Column('timestamp with time zone')
-  public updatedTime: string;
+  public updatedTime: Date;
 
   @Column('timestamp with time zone')
   @Index()
-  public expirationTime: string;
+  public expirationTime: Date;
 
   public constructor(init?: Partial<StatusEntity>) {
     Object.assign(this, init);

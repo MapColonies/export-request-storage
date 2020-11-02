@@ -5,15 +5,22 @@ import { StatusesRepository } from '../DAL/statusesRepository';
 import { StatusEntity } from '../entity/statusEntity';
 import { NotFoundError } from '../exceptions/notFoundError';
 import { StatusData } from '../models/statusData';
+import { SearchOrder } from '../models/searchOptions';
 
 @injectable()
 export class StatusService {
   private repository?: StatusesRepository;
   public constructor(private readonly connectionManager: ConnectionManager) {}
 
-  public async getAll(): Promise<StatusEntity[]> {
+  public async getAll(updatedTime : SearchOrder): Promise<StatusEntity[]> {
+    const defaultValue : SearchOrder = "DESC";
+    const options : SearchOrder[] = ["ASC", "DESC", 1, -1]; // eslint-disable-line
+    if (!options.includes(updatedTime)) {
+      updatedTime = defaultValue;
+    }
+
     const repository: StatusesRepository = await this.getRepository();
-    const statuses: StatusEntity[] = await repository.getAll();
+    const statuses: StatusEntity[] = await repository.getAll(updatedTime);
 
     return statuses;
   }
@@ -22,7 +29,7 @@ export class StatusService {
     const repository: StatusesRepository = await this.getRepository();
     const status: StatusEntity | undefined = await repository.get(id);
     if (!status) {
-      throw new NotFoundError(`Status ID "${id}" was not fond`);
+      throw new NotFoundError(`Status ID "${id}" was not found`);
     }
     return status;
   }
@@ -42,7 +49,6 @@ export class StatusService {
     return updatedStatus;
   }
 
-
   public async delete(taskId: string): Promise<DeleteResult> {
     const repository: StatusesRepository = await this.getRepository();
     const deletedStatus: DeleteResult = await repository.delete({ taskId });
@@ -57,9 +63,5 @@ export class StatusService {
       this.repository = this.connectionManager.getStatusRepository();
     }
     return this.repository;
-  }
-
-  private modelToEntity(model: StatusData): StatusEntity {
-    return new StatusEntity(model as Partial<StatusEntity>);
   }
 }
