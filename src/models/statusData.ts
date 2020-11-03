@@ -9,8 +9,8 @@ export interface StatusData {
     progress?: number;
     status?: string;
     geometry?: Geometry;
-    estimatedFileSize?: string;
-    realFileSize?: string;
+    estimatedFileSize?: number;
+    realFileSize?: number;
     creationTime?: Date;
     updatedTime?: Date;
     expirationTime?: Date;

@@ -191,18 +191,18 @@ components:
           type: object
           example: { "type": "Point", "coordinates": [125.6, 10.1] }
         estimatedFileSize: 
-          type: string
-          example: "10.5GB"
+          type: number
+          example: 1500
         realFileSize: 
-          type: string
-          example: "10.4GB"
+          type: number
+          example: 1400
         creationTime: 
           type: string
-          format: date
+          # format: date
         updatedTime: 
           type: string
-          format: date
+          # format: date
         expirationTime: 
           type: string
-          format: date
+          # format: date
           example: "2020-12-30"
