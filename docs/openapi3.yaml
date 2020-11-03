@@ -64,7 +64,7 @@ paths:
         - statuses
   /statuses/delete:
     post:
-      summary: Delete single/multiple statuses from the database.
+      summary: Delete single/multiple statuses from the database by task ID.
       requestBody:
         required: true
         content:

@@ -1,4 +1,4 @@
-import { Repository, EntityRepository, LessThan } from 'typeorm';
+import { Repository, EntityRepository, LessThan, DeleteResult } from 'typeorm';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import config from 'config';
@@ -43,12 +43,20 @@ export class StatusesRepository extends Repository<StatusEntity> {
   }
 
   public async statusesBeforeExpiredDate(
-    date: string,
+    date: string
   ): Promise<StatusEntity[]> {
     return this.find({
       where: {
-        expirationTime: LessThan(date)
+        expirationTime: LessThan(date),
       },
     });
+  }
+
+  public async deleteByTaskIds(taskIds: string[]): Promise<DeleteResult> {
+    return this.createQueryBuilder()
+      .delete()
+      .from(StatusEntity)
+      .where('taskId IN (:...ids)', { ids: taskIds })
+      .execute();
   }
 }

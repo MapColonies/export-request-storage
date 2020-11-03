@@ -5,7 +5,7 @@ import { StatusesRepository } from '../DAL/statusesRepository';
 import { StatusEntity } from '../entity/statuses';
 import { NotFoundError } from '../exceptions/notFoundError';
 import { StatusData } from '../models/statusData';
-import { SearchOrder, TaskIdObject } from '../models/searchOptions';
+import { SearchOrder } from '../models/searchOptions';
 
 @injectable()
 export class StatusService {
@@ -51,12 +51,7 @@ export class StatusService {
 
   public async delete(taskIds: string[]): Promise<DeleteResult> {
     const repository: StatusesRepository = await this.getRepository();
-    const deletedStatuses = await repository.createQueryBuilder()
-      .delete()
-      .from(StatusEntity)
-      .where('taskId IN (:...ids)', { ids: taskIds })
-      .execute();
-
+    const deletedStatuses = await repository.deleteByTaskIds(taskIds);
     return deletedStatuses;
   }
 
