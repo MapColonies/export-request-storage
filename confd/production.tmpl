@@ -1,7 +1,8 @@
 {
   "swagger": {
-    "jsonPath": "{{ getv "/configuration/swagger/jsonPath" "/api-json" }}",
-    "uiPath": "{{ getv "/configuration/swagger/uiPath" "/api-docs" }}"
+    "jsonPath": "{{ getv "/configuration/swagger/json/path" "/api-json" }}",
+    "uiPath": "{{ getv "/configuration/swagger/ui/path" "/api-docs" }}",
+    "portOverride": "{{ getv "/configuration/swagger/port" "" }}"
   },
   "logger": {
     "level": "{{ getv "/configuration/logger/level" "error" }}"
@@ -31,6 +32,6 @@
       }
    },
    "search":{
-      "defaultPageSize": {{getv "/configuration/search/defaultPageSize" "20"}}
+      "defaultPageSize": {{getv "/configuration/search/default/page/size" "20"}}
    }
 }

@@ -1,12 +1,13 @@
+/*eslint-disable */
 //this import must be called before the first import of tsyring
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
-import { ImageDataRepository } from '../../DAL/ImageDataRepository';
-import { ImageData } from '../../entity/ImageData';
+import { StatusesRepository } from '../../DAL/statusesRepository';
+import { StatusEntity } from '../../entity/statuses';
 import { OrderField, SearchOptions } from '../../models/searchOptions';
-import { ConflictError } from '../../exceptions/ConflictError';
-import { NotFoundError } from '../../exceptions/NotFoundError';
+import { ConflictError } from '../../exceptions/conflictError';
+import { NotFoundError } from '../../exceptions/notFoundError';
 interface SearchOption {
   query: string;
   parameters: [
@@ -17,11 +18,11 @@ interface SearchOption {
   ];
 }
 
-const data = new ImageData();
+const data = new StatusEntity();
 
 describe('Image repository test', () => {
   let loggerMock: MCLogger;
-  let imagesRepo: ImageDataRepository;
+  let imagesRepo: StatusesRepository;
 
   beforeEach(() => {
     loggerMock = ({
@@ -32,7 +33,7 @@ describe('Image repository test', () => {
     } as unknown) as MCLogger;
     container.clearInstances();
     container.registerInstance<MCLogger>(MCLogger, loggerMock);
-    imagesRepo = new ImageDataRepository();
+    imagesRepo = new StatusesRepository();
     //mock db calls
     imagesRepo.findOne = jest.fn();
     imagesRepo.save = jest.fn();

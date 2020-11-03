@@ -1,124 +1,208 @@
 openapi: 3.0.1
 info:
-  title: Image Indexer Service
-  description: api for cataloging raster location and metadata
+  title: Requests Status Indexer Service
+  description: API for export requests statuses
   version: 1.0.0
 servers:
-  - url: http://localhost:1337
+  - url: http://localhost:80/
 paths:
-  # /images:
-  #   post:
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-CreateDb.json"
-  #     responses:
-  #       "201":
-  #         description: ""
-  #     tags:
-  #       - images
-  #   put:
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: "http://localhost/Schema/ImageMetadata/ImageMetadata-Update.json"
-  #     responses:
-  #       "200":
-  #         description: ""
-  #     tags:
-  #       - images
-  /statuses/{id}:
+  /statuses:
     get:
+      tags:
+        - statuses
+      summary: Get all statuses from the database.
+      parameters:
+      - in: query
+        name: updatedTime
+        description: Order by ascending or descending updated date. Default is descending.
+        required: false
+        schema:
+          type: string
+          enum: [ASC, DESC]
+      responses:
+        200:
+          description: All statuses.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
+        404:
+          description: No statuses in the database.
+        400:
+          description: Invalid request, could not retrieve statuses.              
+    post:
+      summary: Creates a new status in the table.
+      tags:
+        - statuses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/statusRequest"
+      responses:
+        200:
+          description: Status created succesfully.
+        400:
+          description: Invalid request, could not retrieve statuses.
+    put:
+      summary: Updates an existing record from the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/statusRequest"
+      responses:
+        200:
+          description: Request processed succesfully. Either rows were updated or not - depends on "affected" response attribute.
+        400:
+          description: Invalid request, could not retrieve statuses.
+      tags:
+        - statuses
+  /statuses/delete:
+    post:
+      summary: Delete single/multiple statuses from the database by task ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+                example: "a156bd71-5efe-48da-8e82-3a4c51d8296f"
+      responses:
+        200:
+          description: Request processed. Either rows were deleted or not - depends on "affected" response attribute.
+        400:
+          description: Invalid request, could not retrieve statuses.
+      tags:
+        - statuses    
+        
+  /statuses/{taskId}:
+    get:
+      summary: Get a single status from the databsae.
       parameters:
         - $ref: "#/components/parameters/idParam"
       responses:
-        "200":
-          description: ""
+        200:
+          description: The requested status.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/statusRequest"
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
       tags:
-        - images
-    # delete:
-    #   parameters:
-    #     - $ref: "#/components/parameters/idParam"
-    #   responses:
-    #     "200":
-    #       description: ""
-    #   tags:
-    #     - images
-#   "/images/exists/{id}":
-#     get:
-#       parameters:
-#         - $ref: "#/components/parameters/idParam"
-#       responses:
-#         "200":
-#           description: ""
-#       tags:
-#         - images
-#   "/images/search":
-#     post:
-#       requestBody:
-#         required: true
-#         content:
-#           application/json:
-#             schema:
-#               $ref: "#/components/schemas/searchOptions"
-#       responses:
-#         "200":
-#           description: "list of matching image metadatas"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "http://localhost/Schema/Http/ImageMetadataArrayResponse.json"
-#       tags:
-#         - images
+        - statuses
+  /statuses/user/{userId}:
+    get:
+      summary: Get all statuses by user ID.
+      parameters:
+      - in: path
+        name: userId
+        description: The ID of the user.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: All statuses by this user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
+      tags:
+        - statuses    
+  /statuses/expired/{date}:
+    get:
+      summary: Get all statuses that expired before the specified date.
+      parameters:
+      - in: path
+        name: date
+        description: Expiration date to search for statuses expired after it.
+        required: true
+        schema:
+          type: string
+          format: date    
+      responses:
+        200:
+          description: All statuses by this user.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
+        400:
+          description: Invalid request, could not retrieve statuses.
+        404:
+          description: Status was not found.
+      tags:
+        - statuses    
 components:
   parameters:
     idParam:
-      name: id
+      name: taskId
       in: path
       description: id of requested item
       required: true
       schema:
         type: string
-        format: uuid
-#   schemas:
-#     searchOptions:
-#       type: object
-#       properties:
-#         geometry:
-#           type: object
-#           oneOf:
-#             - $ref: "http://localhost/Schema/geojson/Point.json"
-#             - $ref: "http://localhost/Schema/geojson/Polygon.json"
-#           example: { "type": "Point", "coordinates": [125.6, 10.1] }
-#         startDate:
-#           type: string
-#           format: date
-#         endDate:
-#           type: string
-#           format: date
-#         sort:
-#           type: object
-#           properties:
-#             orderBy:
-#               type: string
-#               enum:
-#                 - imagingTime
-#             desc:
-#               type: boolean
-#               example: true
-#           required:
-#             - desc
-#             - orderBy
-#         pageSize:
-#           type: integer
-#           maximum: 10000
-#           minimum: 1
-#           example: 30
-#         offset:
-#           type: integer
-#           minimum: 0
-#           example: 60
+        format: uuid       
+  schemas:
+    statusRequest:
+      type: object
+      properties:
+        taskId:
+          type: string
+          format: uuid
+        userId: 
+          type: string
+          example: "328965"
+        fileName: 
+          type: string
+          example: "testFile"
+        directoryName: 
+          type: string
+          example: "testDir"
+        fileURI: 
+          type: string
+          example: "../testDir/testFile"
+        progress: 
+          type: integer
+          example: 44
+        status: 
+          type: string
+          example: "In Progress"
+        geometry: 
+          type: object
+          example: { "type": "Point", "coordinates": [125.6, 10.1] }
+        estimatedFileSize: 
+          type: string
+          example: "10.5GB"
+        realFileSize: 
+          type: string
+          example: "10.4GB"
+        creationTime: 
+          type: string
+          format: date
+        updatedTime: 
+          type: string
+          format: date
+        expirationTime: 
+          type: string
+          format: date
+          example: "2020-12-30"
