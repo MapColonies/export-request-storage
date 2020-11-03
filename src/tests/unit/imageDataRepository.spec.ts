@@ -4,7 +4,7 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import { StatusesRepository } from '../../DAL/statusesRepository';
-import { StatusEntity } from '../../entity/statusEntity';
+import { StatusEntity } from '../../entity/statuses';
 import { OrderField, SearchOptions } from '../../models/searchOptions';
 import { ConflictError } from '../../exceptions/conflictError';
 import { NotFoundError } from '../../exceptions/notFoundError';

@@ -1,8 +1,8 @@
-import { Repository, EntityRepository, MoreThan } from 'typeorm';
+import { Repository, EntityRepository, LessThan } from 'typeorm';
 import { container } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import config from 'config';
-import { StatusEntity } from '../entity/statusEntity';
+import { StatusEntity } from '../entity/statuses';
 import { SearchOrder } from '../models/searchOptions';
 
 @EntityRepository(StatusEntity)
@@ -42,12 +42,12 @@ export class StatusesRepository extends Repository<StatusEntity> {
     });
   }
 
-  public async statusesAfterExpiredDate(
+  public async statusesBeforeExpiredDate(
     date: string,
   ): Promise<StatusEntity[]> {
     return this.find({
       where: {
-        expirationTime: MoreThan(date)
+        expirationTime: LessThan(date)
       },
     });
   }

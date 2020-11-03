@@ -10,8 +10,8 @@ statusRouter.get('/', validate, controller.getAll.bind(controller));
 statusRouter.post('/', validate, controller.create.bind(controller));
 statusRouter.get('/:taskId', validate, controller.get.bind(controller));
 statusRouter.put('/', validate, controller.update.bind(controller));
-statusRouter.delete('/:taskId', validate, controller.delete.bind(controller));
+statusRouter.post('/delete', validate, controller.delete.bind(controller));
 statusRouter.get('/user/:userId', validate, controller.getStatusesByUserId.bind(controller));
-statusRouter.get('/expired/:date', validate, controller.getStatusesAfterExpiredDate.bind(controller));
+statusRouter.get('/expired/:date', validate, controller.getStatusesBeforeExpiredDate.bind(controller));
 
 export { statusRouter as StatusRouter };

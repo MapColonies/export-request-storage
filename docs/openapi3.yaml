@@ -25,7 +25,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/statusRequest'
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
         404:
           description: No statuses in the database.
         400:
@@ -55,11 +57,32 @@ paths:
               $ref: "#/components/schemas/statusRequest"
       responses:
         200:
-          description: Status updated succesfully.
+          description: Request processed succesfully. Either rows were updated or not - depends on "affected" response attribute.
         400:
           description: Invalid request, could not retrieve statuses.
       tags:
         - statuses
+  /statuses/delete:
+    post:
+      summary: Delete single/multiple statuses from the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+                example: "a156bd71-5efe-48da-8e82-3a4c51d8296f"
+      responses:
+        200:
+          description: Request processed. Either rows were deleted or not - depends on "affected" response attribute.
+        400:
+          description: Invalid request, could not retrieve statuses.
+      tags:
+        - statuses    
+        
   /statuses/{taskId}:
     get:
       summary: Get a single status from the databsae.
@@ -71,20 +94,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/statusRequest'
-        400:
-          description: Invalid request, could not retrieve statuses.
-        404:
-          description: Status was not found.
-      tags:
-        - statuses
-    delete:
-      summary: Delete a single status from the repository.
-      parameters:
-        - $ref: "#/components/parameters/idParam"
-      responses:
-        200:
-          description: The status was deleted succesfully.
+                $ref: "#/components/schemas/statusRequest"
         400:
           description: Invalid request, could not retrieve statuses.
         404:
@@ -107,7 +117,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/statusRequest'
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
         400:
           description: Invalid request, could not retrieve statuses.
         404:
@@ -116,7 +128,7 @@ paths:
         - statuses    
   /statuses/expired/{date}:
     get:
-      summary: Get all statuses that expired after the specified date.
+      summary: Get all statuses that expired before the specified date.
       parameters:
       - in: path
         name: date
@@ -131,7 +143,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/statusRequest'
+                type: array
+                items:
+                  $ref: "#/components/schemas/statusRequest"
         400:
           description: Invalid request, could not retrieve statuses.
         404:

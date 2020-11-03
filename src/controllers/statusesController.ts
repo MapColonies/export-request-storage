@@ -16,8 +16,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const updatedTime: SearchOrder = req.query.updatedTime as SearchOrder;
-      const data = await this.service.getAll(updatedTime);
+      const updatedTimeOrder: SearchOrder = req.query.updatedTime as SearchOrder;
+      const data = await this.service.getAll(updatedTimeOrder);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -74,8 +74,8 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const taskId: string = req.params.taskId;
-      const data = await this.service.delete(taskId);
+      const taskIds: string[] = req.body as string[];
+      const data = await this.service.delete(taskIds);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -97,14 +97,14 @@ export class StatusController {
     }
   }
 
-  public async getStatusesAfterExpiredDate(
+  public async getStatusesBeforeExpiredDate(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
     try {;
       const date: string = req.params.date;
-      const data = await this.service.statusesAfterExpiredDate(date);
+      const data = await this.service.statusesBeforeExpiredDate(date);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);

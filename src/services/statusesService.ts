@@ -2,10 +2,10 @@ import { injectable } from 'tsyringe';
 import { UpdateResult, InsertResult, DeleteResult } from 'typeorm';
 import { ConnectionManager } from '../DAL/connectionManager';
 import { StatusesRepository } from '../DAL/statusesRepository';
-import { StatusEntity } from '../entity/statusEntity';
+import { StatusEntity } from '../entity/statuses';
 import { NotFoundError } from '../exceptions/notFoundError';
 import { StatusData } from '../models/statusData';
-import { SearchOrder } from '../models/searchOptions';
+import { SearchOrder, TaskIdObject } from '../models/searchOptions';
 
 @injectable()
 export class StatusService {
@@ -13,8 +13,8 @@ export class StatusService {
   public constructor(private readonly connectionManager: ConnectionManager) {}
 
   public async getAll(updatedTimeOrder: SearchOrder): Promise<StatusEntity[]> {
-    const defaultValue: SearchOrder = "DESC";
-    const options: SearchOrder[] = ["ASC", "DESC"];
+    const defaultValue: SearchOrder = 'DESC';
+    const options: SearchOrder[] = ['ASC', 'DESC'];
     if (!options.includes(updatedTimeOrder)) {
       updatedTimeOrder = defaultValue;
     }
@@ -49,21 +49,34 @@ export class StatusService {
     return updatedStatus;
   }
 
-  public async delete(taskId: string): Promise<DeleteResult> {
+  public async delete(taskIds: string[]): Promise<DeleteResult> {
     const repository: StatusesRepository = await this.getRepository();
-    const deletedStatus: DeleteResult = await repository.delete({ taskId });
-    return deletedStatus;
+    const deletedStatuses = await repository.createQueryBuilder()
+      .delete()
+      .from(StatusEntity)
+      .where('taskId IN (:...ids)', { ids: taskIds })
+      .execute();
+
+    return deletedStatuses;
   }
 
-  public async statusesByUserId(userId: string, updatedTimeOrder: SearchOrder): Promise<StatusEntity[]> {
+  public async statusesByUserId(
+    userId: string,
+    updatedTimeOrder: SearchOrder
+  ): Promise<StatusEntity[]> {
     const repository: StatusesRepository = await this.getRepository();
-    const statusesByUserId: StatusEntity[] = await repository.statusesByUserId(userId, updatedTimeOrder);
+    const statusesByUserId: StatusEntity[] = await repository.statusesByUserId(
+      userId,
+      updatedTimeOrder
+    );
     return statusesByUserId;
   }
 
-  public async statusesAfterExpiredDate(date: string): Promise<StatusEntity[]> {
+  public async statusesBeforeExpiredDate(date: string): Promise<StatusEntity[]> {
     const repository: StatusesRepository = await this.getRepository();
-    const statusesByUserId: StatusEntity[] = await repository.statusesAfterExpiredDate(date);
+    const statusesByUserId: StatusEntity[] = await repository.statusesBeforeExpiredDate(
+      date
+    );
     return statusesByUserId;
   }
 
