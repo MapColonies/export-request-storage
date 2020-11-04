@@ -2,17 +2,17 @@ import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { Geometry } from 'geojson';
 
 @Entity('statuses')
-@Index(['fileName', 'directoryName'], { unique: true })
+@Index("pathIndex", ['fileName', 'directoryName'], { unique: true })
 export class StatusEntity {
   @PrimaryGeneratedColumn()
   public id: string;
 
   @Column()
-  @Index({ unique: true })
+  @Index("taskIndex", { unique: true })
   public taskId: string;
 
   @Column()
-  @Index()
+  @Index("userIndex")
   public userId: string;
 
   @Column()
@@ -34,7 +34,7 @@ export class StatusEntity {
     spatialFeatureType: 'Geometry',
     srid: 4326,
   })
-  @Index({ spatial: true })
+  @Index("geometryIndex", { spatial: true })
   public geometry: Geometry;
 
   @Column()
@@ -50,7 +50,7 @@ export class StatusEntity {
   public updatedTime: Date;
 
   @Column('timestamp with time zone')
-  @Index()
+  @Index("expirationTimeIndex")
   public expirationTime: Date;
 
   public constructor(init?: Partial<StatusEntity>) {

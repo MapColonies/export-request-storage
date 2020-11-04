@@ -59,4 +59,19 @@ export class StatusesRepository extends Repository<StatusEntity> {
       .where('taskId IN (:...ids)', { ids: taskIds })
       .execute();
   }
+
+  public async taskIdExists(taskId: string) : Promise<boolean> {
+    const statuses = await this.find({
+      where: { taskId }
+    });
+    return Boolean(statuses.length);
+  }
+
+
+  public async filePathExists(fileName: string, directoryName: string) : Promise<boolean> {
+    const statuses = await this.find({
+      where: { fileName, directoryName }
+    });
+    return Boolean(statuses.length);
+  }
 }
