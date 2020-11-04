@@ -1,5 +1,5 @@
 {
-  "name": "discrete-layer-storage",
+  "name": "export-request-storage",
   "version": "1.0.0",
   "description": "discrete layer db service",
   "main": "index.ts",

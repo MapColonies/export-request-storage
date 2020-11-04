@@ -136,7 +136,7 @@ paths:
         required: true
         schema:
           type: string
-          format: date    
+          format: date-time    
       responses:
         200:
           description: All statuses by this user.
@@ -198,11 +198,11 @@ components:
           example: 1400
         creationTime: 
           type: string
-          # format: date
+          format: date-time
         updatedTime: 
           type: string
-          # format: date
+          format: date-time
         expirationTime: 
           type: string
-          # format: date
+          format: date-time
           example: "2020-12-30"
