@@ -43,7 +43,7 @@ export class SwaggerController {
     initDotEnv();
     const defaultPort = "80";
     const host: string = process.env.HOST ?? 'http://localhost';
-    const port: string = this.swaggerConfig.portOverride ??  process.env.SERVER_PORT ?? defaultPort; // eslint-disable-line
+    const port: string = this.swaggerConfig.portOverride ? this.swaggerConfig.portOverride : process.env.SERVER_PORT ?? defaultPort;
     const servers = ((this.swaggerDoc.servers) as SwaggerServer[]);
     servers[0].url = `${host}:${port}`;
   }
