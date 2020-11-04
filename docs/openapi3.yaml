@@ -193,9 +193,11 @@ components:
         estimatedFileSize: 
           type: number
           example: 1500
+          description: Estimated file size (in MB).
         realFileSize: 
           type: number
           example: 1400
+          description: Actual file size (in MB).
         creationTime: 
           type: string
           format: date-time
