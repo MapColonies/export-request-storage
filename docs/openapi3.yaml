@@ -205,4 +205,4 @@ components:
         expirationTime: 
           type: string
           format: date-time
-          example: "2020-12-30"
+          example: "2020-11-20T12:49:21.577Z"
