@@ -39,13 +39,16 @@ export class StatusService {
     const repository: StatusesRepository = await this.getRepository();
     const taskIdExists = await repository.taskIdExists(status.taskId);
 
+    const fileName = status.fileName!;
+    const directoryName = status.directoryName!;
+    
     if (!taskIdExists) {
-      const filePathExists = await repository.filePathExists(status.fileName!, status.directoryName!);
+      const filePathExists = await repository.filePathExists(fileName, directoryName);
       if (!filePathExists) {
         const insertedStatus: InsertResult = await repository.insert(status);
         return insertedStatus;
       } else {
-        throw new ConflictError(`Could not create status. Path "${status.fileName}/${status.directoryName}" already exists.`)
+        throw new ConflictError(`Could not create status. Path "${fileName}/${directoryName}" already exists.`)
       }
     } else {
       throw new ConflictError(`Could not create status. TaskID "${status.taskId}" already exists.`)
