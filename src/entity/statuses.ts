@@ -38,10 +38,10 @@ export class StatusEntity {
   public geometry: Geometry;
 
   @Column()
-  public estimatedFileSize: string;
+  public estimatedFileSize: number;
 
   @Column()
-  public realFileSize: string;
+  public realFileSize: number;
 
   @Column('timestamp with time zone')
   public creationTime: Date;
