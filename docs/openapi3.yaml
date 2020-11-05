@@ -194,7 +194,7 @@ components:
             - In-Progress
             - Completed
             - Failed
-          example: "In Progress"
+          example: "In-Progress"
         geometry: 
           type: object
           example: { "type": "Point", "coordinates": [125.6, 10.1] }

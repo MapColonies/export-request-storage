@@ -61,17 +61,17 @@ export class StatusesRepository extends Repository<StatusEntity> {
   }
 
   public async taskIdExists(taskId: string) : Promise<boolean> {
-    const statuses = await this.find({
+    const statuses = await this.findOne({
       where: { taskId }
     });
-    return Boolean(statuses.length);
+    return Boolean(statuses);
   }
 
 
   public async filePathExists(fileName: string, directoryName: string) : Promise<boolean> {
-    const statuses = await this.find({
+    const statuses = await this.findOne({
       where: { fileName, directoryName }
     });
-    return Boolean(statuses.length);
+    return Boolean(statuses);
   }
 }
