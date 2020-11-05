@@ -21,4 +21,4 @@ export enum StatusesEnum {
     EDITOR = 'In-Progress',
     COMPLETED = 'Completed',
     FAILED = 'Failed',
-  }
+}
