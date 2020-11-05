@@ -7,11 +7,18 @@ export interface StatusData {
     directoryName?: string;
     fileURI?: string;
     progress?: number;
-    status?: string;
+    status?: StatusesEnum;
     geometry?: Geometry;
     estimatedFileSize?: number;
     realFileSize?: number;
     creationTime?: Date;
     updatedTime?: Date;
     expirationTime?: Date;
+}
+
+export enum StatusesEnum {
+    PENDING = 'Pending',
+    EDITOR = 'In-Progress',
+    COMPLETED = 'Completed',
+    FAILED = 'Failed',
 }

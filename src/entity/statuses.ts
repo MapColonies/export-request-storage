@@ -1,18 +1,19 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { Geometry } from 'geojson';
+import { StatusesEnum } from '../models/statusData';
 
 @Entity('statuses')
-@Index(['fileName', 'directoryName'], { unique: true })
+@Index('pathIndex', ['fileName', 'directoryName'], { unique: true })
 export class StatusEntity {
   @PrimaryGeneratedColumn()
   public id: string;
 
   @Column()
-  @Index({ unique: true })
+  @Index('taskIndex', { unique: true })
   public taskId: string;
 
   @Column()
-  @Index()
+  @Index('userIndex')
   public userId: string;
 
   @Column()
@@ -27,14 +28,14 @@ export class StatusEntity {
   @Column()
   public progress: number;
 
-  @Column()
-  public status: string;
+  @Column({ type: 'enum', enum: StatusesEnum })
+  public status: StatusesEnum;
 
   @Column('geometry', {
     spatialFeatureType: 'Geometry',
     srid: 4326,
   })
-  @Index({ spatial: true })
+  @Index('geometryIndex', { spatial: true })
   public geometry: Geometry;
 
   @Column()
@@ -50,7 +51,7 @@ export class StatusEntity {
   public updatedTime: Date;
 
   @Column('timestamp with time zone')
-  @Index()
+  @Index('expirationTimeIndex')
   public expirationTime: Date;
 
   public constructor(init?: Partial<StatusEntity>) {
