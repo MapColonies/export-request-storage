@@ -5,6 +5,7 @@ import { InsertResult, UpdateResult } from 'typeorm';
 import { StatusService } from '../services/statusesService';
 import { StatusData } from '../models/statusData';
 import { SearchOrder } from '../models/searchOptions';
+import { CreateRecordError } from '../exceptions/httpError';
 
 @injectable()
 export class StatusController {
@@ -16,14 +17,14 @@ export class StatusController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const updatedTimeOrder: SearchOrder = req.query.updatedTime as SearchOrder;
+      const updatedTimeOrder: SearchOrder = req.query
+        .updatedTime as SearchOrder;
       const data = await this.service.getAll(updatedTimeOrder);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
     }
   }
-
 
   public async get(
     req: Request,
@@ -44,12 +45,12 @@ export class StatusController {
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
+    const status: StatusData = req.body as StatusData;
     try {
-      const status: StatusData = req.body as StatusData;
       const data: InsertResult = await this.service.create(status);
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
-      return next(err);
+      return next(new CreateRecordError(err, status));
     }
   }
 
@@ -61,7 +62,7 @@ export class StatusController {
     try {
       const status: StatusData = req.body as StatusData;
       const data: UpdateResult = await this.service.update(status);
-      
+
       return res.status(httpStatus.OK).json(data);
     } catch (err) {
       return next(err);
@@ -102,7 +103,7 @@ export class StatusController {
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
-    try {;
+    try {
       const date: string = req.params.date;
       const data = await this.service.statusesBeforeExpiredDate(date);
       return res.status(httpStatus.OK).json(data);
