@@ -5,6 +5,7 @@ import { injectable } from 'tsyringe';
 import { StatusCodes } from 'http-status-codes';
 import { InputValidationError } from 'openapi-validator-middleware';
 import { HttpError } from '../exceptions/httpError';
+import { ConflictError } from '../exceptions/conflictError';
 
 @injectable()
 export class ErrorHandler {
@@ -27,6 +28,11 @@ export class ErrorHandler {
           message: {
             validationErrors: err.errors,
           },
+        };
+      } else if (err instanceof ConflictError) {
+        resBody.error = {
+          statusCode: StatusCodes.CONFLICT,
+          message: err.message,
         };
       } else if (err instanceof HttpError) {
         resBody.error = {
