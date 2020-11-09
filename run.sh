@@ -1,1 +1,1 @@
-npm run confd:prod && node ./index.js
+npm run confd:prod && node ./dist/index.js
