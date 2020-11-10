@@ -1,1 +1,1 @@
-docker build -t export_storage:latest .
+docker build -t export-storage:latest .
