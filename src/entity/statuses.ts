@@ -38,10 +38,10 @@ export class StatusEntity {
   @Index('geometryIndex', { spatial: true })
   public geometry: Geometry;
 
-  @Column()
+  @Column('double precision')
   public estimatedFileSize: number;
 
-  @Column()
+  @Column('double precision')
   public realFileSize: number;
 
   @Column('timestamp with time zone')
