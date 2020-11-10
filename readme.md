@@ -14,7 +14,7 @@ this is required to keep db updates match the service version
 1. Run `npm start` - default port is 80.
 
 If you would like to run as docker, consider the following steps:
-1. Build the docker image by running `build.sh`. This will create a docker image named `export_storage` and tag `latest`.
+1. Build the docker image by running `build.sh`. This will create a docker image named `export-storage` and tag `latest`.
 2. Run the `docker_run.sh` script. Please note for default configuration as you might want to adjust it for your local needs.
 
 # API Usage
