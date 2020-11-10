@@ -1,33 +1,44 @@
-# Map Colonies discrete layers storage service
+# Statuses Storage Service
 
-## notes
+A service that exposes a gateway to the export-request statuses storage. 
 
-please run `npm run migration` and commit changes before every tag (`npm run release`).
+# Notes
+
+Please run `npm run migration` and commit changes before every tag (`npm run release`).
 this is required to keep db updates match the service version
 
-# api usage
+# Usage
+1. Run `npm install `.
+1. Run `npm run confd` to generate config file from confd
+1. (optional) add `.env` file to change server port and swagger host name (see `.env.example`)
+1. Run `npm start` - default port is 80.
 
-## create new image metadata
+If you would like to run as docker, consider the following steps:
+1. Build the docker image by running `build.sh`. This will create a docker image named `export-storage` and tag `latest`.
+2. Run the `docker_run.sh` script. Please note for default configuration as you might want to adjust it for your local needs.
 
-new image metadata can be saved by sending POST request with image metadata json as its body to /images.
-the image metadata fields can be found [here](https://github.com/mapcolonies/geedocker/issues/12)
+# API Usage
 
-## read specific image metadata
+## Create a new export-request status
 
-existing image metadata can be retrieved by sending GET request to /images/\<image metadata id\>
+new export-request status can be saved by sending POST request with the needed attributes as JSON in the request body to `/statuses`.
 
-## update existing image metadata
+## Read a specific status
 
-existing image metadata can be updated by sending PUT request with the updated fields as json in the request body to /images/\<image metadata id\>.
+Existing export-request status can be retrieved by sending GET request to `/statuses/<taskId>`. *taskId* is the unique identifier of the status.
 
-## delete existing image metadata
+## Search all export-requests of a specific user
 
-exsisting image meta data can be deleted by sending DELETE requst to /images/\<image metadata id\>
+Existing export-requests which made by a specific user can be retrieved by sending GET to `/statuses/user/<userId>`. *userId* is the unique identifier of the user.
 
-## search image metadata
+## Update existing status
 
-image metadata can be search by sending any combination of the following field as json POST request body to /images/search:
+Existing export-request statuses can be updated by sending PUT request with the updated fields as JSON in the request body to `/statuses/<taskId>`. *taskId* is the unique identifier of the status.
 
-- geometry: a geojson (see geojson specifications [here](https://tools.ietf.org/html/rfc7946)) point/polygon object. only metadata of images that intersect with the given polygon/point will be returned.
-- startDate: date string in format: "YYYY-MM-DD". only images that ware imaged form at this date or after it will be returned.
-- endDate: date string in format: "YYYY-MM-DD". only images that ware imaged form at this date or before it will be returned.
+## Delete existing status
+
+Existing status data can be deleted by sending POST request to `/statuses/delete`. This request expects of a request body that contains arrays of *taskIds* (UUID string) to delete.
+
+## Search statuses by their expiration date
+
+Existing statuses that expire before a specific date can be retrieved by making a GET request to `/statuses/expired/<date>`. Any status which its expiration date happens before *date* will be returned.
