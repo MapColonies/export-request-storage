@@ -46,6 +46,8 @@ paths:
       responses:
         200:
           description: Status created succesfully.
+        409:
+          description: Conflict - either taskID already exists OR path already exists (fileName and directoryName)
         400:
           description: Invalid request, could not retrieve statuses.
     put:
