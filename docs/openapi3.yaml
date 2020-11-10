@@ -78,6 +78,7 @@ paths:
                 type: string
                 format: uuid
                 example: "a156bd71-5efe-48da-8e82-3a4c51d8296f"
+              uniqueItems: true
       responses:
         200:
           description: Request processed. Either rows were deleted or not - depends on "affected" response attribute.
@@ -178,9 +179,11 @@ components:
         fileName: 
           type: string
           example: "testFile"
+          pattern: '^[a-zA-Z0-9_-]+$'
         directoryName: 
           type: string
           example: "testDir"
+          pattern: '^[a-zA-Z0-9_-]+$'
         fileURI: 
           type: string
           example: "../testDir/testFile"
