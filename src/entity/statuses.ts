@@ -54,6 +54,9 @@ export class StatusEntity {
   @Index('expirationTimeIndex')
   public expirationTime: Date;
 
+  @Column({ default: 0 })
+  public workerAttempts: number;
+
   public constructor(init?: Partial<StatusEntity>) {
     Object.assign(this, init);
   }

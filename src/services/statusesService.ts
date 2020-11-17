@@ -41,17 +41,24 @@ export class StatusService {
 
     const fileName = status.fileName!;
     const directoryName = status.directoryName!;
-    
+
     if (!taskIdExists) {
-      const filePathExists = await repository.filePathExists(fileName, directoryName);
+      const filePathExists = await repository.filePathExists(
+        fileName,
+        directoryName
+      );
       if (!filePathExists) {
         const insertedStatus: InsertResult = await repository.insert(status);
         return insertedStatus;
       } else {
-        throw new ConflictError(`Could not create status. Path "${fileName}/${directoryName}" already exists.`)
+        throw new ConflictError(
+          `Could not create status. Path "${fileName}/${directoryName}" already exists.`
+        );
       }
     } else {
-      throw new ConflictError(`Could not create status. TaskID "${status.taskId}" already exists.`)
+      throw new ConflictError(
+        `Could not create status. TaskID "${status.taskId}" already exists.`
+      );
     }
   }
 
@@ -82,7 +89,9 @@ export class StatusService {
     return statusesByUserId;
   }
 
-  public async statusesBeforeExpiredDate(date: string): Promise<StatusEntity[]> {
+  public async statusesBeforeExpiredDate(
+    date: string
+  ): Promise<StatusEntity[]> {
     const repository: StatusesRepository = await this.getRepository();
     const statusesByUserId: StatusEntity[] = await repository.statusesBeforeExpiredDate(
       date
