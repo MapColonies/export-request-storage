@@ -12,13 +12,13 @@ paths:
         - statuses
       summary: Get all statuses from the database.
       parameters:
-      - in: query
-        name: updatedTime
-        description: Order by ascending or descending updated date. Default is descending.
-        required: false
-        schema:
-          type: string
-          enum: [ASC, DESC]
+        - in: query
+          name: updatedTime
+          description: Order by ascending or descending updated date. Default is descending.
+          required: false
+          schema:
+            type: string
+            enum: [ASC, DESC]
       responses:
         200:
           description: All statuses.
@@ -27,11 +27,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/statusRequest"
+                  $ref: '#/components/schemas/statusRequest'
         404:
           description: No statuses in the database.
         400:
-          description: Invalid request, could not retrieve statuses.              
+          description: Invalid request, could not retrieve statuses.
     post:
       summary: Creates a new status in the table.
       tags:
@@ -41,8 +41,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/statusRequest"
-              required: [taskId, userId, fileName, directoryName, fileURI, progress, status, geometry, estimatedFileSize, realFileSize, creationTime, updatedTime, expirationTime]
+              $ref: '#/components/schemas/statusRequest'
+              required:
+                [
+                  taskId,
+                  userId,
+                  fileName,
+                  directoryName,
+                  fileURI,
+                  progress,
+                  status,
+                  geometry,
+                  estimatedFileSize,
+                  realFileSize,
+                  creationTime,
+                  updatedTime,
+                  expirationTime,
+                ]
       responses:
         200:
           description: Status created succesfully.
@@ -57,7 +72,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/statusRequest"
+              $ref: '#/components/schemas/statusRequest'
               required: [taskId]
       responses:
         200:
@@ -79,7 +94,7 @@ paths:
               items:
                 type: string
                 format: uuid
-                example: "a156bd71-5efe-48da-8e82-3a4c51d8296f"
+                example: 'a156bd71-5efe-48da-8e82-3a4c51d8296f'
               uniqueItems: true
       responses:
         200:
@@ -87,20 +102,20 @@ paths:
         400:
           description: Invalid request, could not retrieve statuses.
       tags:
-        - statuses    
-        
+        - statuses
+
   /statuses/{taskId}:
     get:
       summary: Get a single status from the databsae.
       parameters:
-        - $ref: "#/components/parameters/idParam"
+        - $ref: '#/components/parameters/idParam'
       responses:
         200:
           description: The requested status.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/statusRequest"
+                $ref: '#/components/schemas/statusRequest'
         400:
           description: Invalid request, could not retrieve statuses.
         404:
@@ -111,12 +126,12 @@ paths:
     get:
       summary: Get all statuses by user ID.
       parameters:
-      - in: path
-        name: userId
-        description: The ID of the user.
-        required: true
-        schema:
-          type: string
+        - in: path
+          name: userId
+          description: The ID of the user.
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: All statuses by this user.
@@ -125,24 +140,24 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/statusRequest"
+                  $ref: '#/components/schemas/statusRequest'
         400:
           description: Invalid request, could not retrieve statuses.
         404:
           description: Status was not found.
       tags:
-        - statuses    
+        - statuses
   /statuses/expired/{date}:
     get:
       summary: Get all statuses that expired before the specified date.
       parameters:
-      - in: path
-        name: date
-        description: Expiration date to search for statuses expired after it.
-        required: true
-        schema:
-          type: string
-          format: date-time    
+        - in: path
+          name: date
+          description: Expiration date to search for statuses expired after it.
+          required: true
+          schema:
+            type: string
+            format: date-time
       responses:
         200:
           description: All statuses by this user.
@@ -151,13 +166,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/statusRequest"
+                  $ref: '#/components/schemas/statusRequest'
         400:
           description: Invalid request, could not retrieve statuses.
         404:
           description: Status was not found.
       tags:
-        - statuses    
+        - statuses
 components:
   parameters:
     idParam:
@@ -167,7 +182,7 @@ components:
       required: true
       schema:
         type: string
-        format: uuid       
+        format: uuid
   schemas:
     statusRequest:
       type: object
@@ -175,52 +190,68 @@ components:
         taskId:
           type: string
           format: uuid
-        userId: 
+        userId:
           type: string
-          example: "328965"
-        fileName: 
+          example: '328965'
+        fileName:
           type: string
-          example: "testFile"
+          example: 'testFile'
           pattern: '^[a-zA-Z0-9_-]+$'
-        directoryName: 
+        directoryName:
           type: string
-          example: "testDir"
+          example: 'testDir'
           pattern: '^[a-zA-Z0-9_-]+$'
-        fileURI: 
+        fileURI:
           type: string
-          example: "../testDir/testFile"
-        progress: 
+          example: '../testDir/testFile'
+        progress:
           type: integer
           example: 44
-        status: 
+        status:
           type: string
           enum:
             - Pending
             - In-Progress
             - Completed
             - Failed
-          example: "In-Progress"
-        geometry: 
+          example: 'In-Progress'
+        geometry:
           type: object
-          example: { "type": "Point", "coordinates": [125.6, 10.1] }
-        estimatedFileSize: 
+          example:
+            {
+              'type': 'Polygon',
+              'coordinates':
+                [
+                  [
+                    [35.1675862495694, 31.9397853228013],
+                    [35.1686373320582, 31.9397853228013],
+                    [35.1686373320582, 31.941677271281],
+                    [35.1675862495694, 31.941677271281],
+                    [35.1675862495694, 31.9397853228013],
+                  ],
+                ],
+            }
+        estimatedFileSize:
           type: number
           example: 1500
           description: Estimated file size (in MB).
-        realFileSize: 
+        realFileSize:
           type: number
           example: 1400
           description: Actual file size (in MB).
-        creationTime: 
+        creationTime:
           type: string
           format: date-time
-        updatedTime: 
+        updatedTime:
           type: string
           format: date-time
-        expirationTime: 
+        expirationTime:
           type: string
           format: date-time
-          example: "2020-11-20T12:49:21.577Z"
+          example: '2020-11-20T12:49:21.577Z'
         workerAttempts:
           type: integer
           example: 0
+        maxZoom:
+          type: integer
+          example: 18
