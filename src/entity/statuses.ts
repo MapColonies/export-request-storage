@@ -57,6 +57,9 @@ export class StatusEntity {
   @Column({ default: 0 })
   public workerAttempts: number;
 
+  @Column({ default: 18 })
+  public maxZoom: number;
+
   public constructor(init?: Partial<StatusEntity>) {
     Object.assign(this, init);
   }

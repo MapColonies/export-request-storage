@@ -15,6 +15,7 @@ export interface StatusData {
   updatedTime?: Date;
   expirationTime?: Date;
   workerAttempts?: number;
+  maxZoom?: number;
 }
 
 export enum StatusesEnum {
