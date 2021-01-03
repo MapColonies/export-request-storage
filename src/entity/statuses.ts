@@ -60,6 +60,9 @@ export class StatusEntity {
   @Column({ default: 18 })
   public maxZoom: number;
 
+  @Column()
+  public sourceLayer: string;
+
   public constructor(init?: Partial<StatusEntity>) {
     Object.assign(this, init);
   }
