@@ -14,7 +14,7 @@ keys = [
     "/configuration/db/database",
     "/configuration/db/synchronize",
     "/configuration/db/logging",
-    "/configuration/db/ssl/reject_unauthorized",
+    "/configuration/db/ssl/reject/unauthorized",
     "/configuration/db/ssl/ca",
     "/configuration/db/ssl/key",
     "/configuration/db/ssl/cert",
