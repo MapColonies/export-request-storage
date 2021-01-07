@@ -255,3 +255,6 @@ components:
         maxZoom:
           type: integer
           example: 18
+        sourceLayer:
+          type: string
+          example: 'satellite_5m_layer'
