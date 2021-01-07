@@ -57,6 +57,7 @@ paths:
                   creationTime,
                   updatedTime,
                   expirationTime,
+                  sourceLayer
                 ]
       responses:
         200:
