@@ -3,7 +3,7 @@
     "@map-colonies/eslint-config/jest",
     "@map-colonies/eslint-config/ts-base"
   ],
-  "ignorePatterns": ["**/*.js", "dist", "src/DAL/migration"],
+  "ignorePatterns": ["**/*.js", "dist", "src//migration"],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
