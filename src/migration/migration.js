@@ -8,7 +8,7 @@ version = version.replace(replacePattern,'_');
 const name = `migration-V${version}`;
 
 const ormConfig = config.get('typeOrm');
-if (ormConfig.ssl.ca && ormConfig.ssl.cert && ormConfig.ssl.key) {
+if (ormConfig.ssl && ormConfig.ssl.ca && ormConfig.ssl.cert && ormConfig.ssl.key) {
   const sslOptions = {
     rejectUnauthorized: ormConfig.ssl.rejectUnauthorized,
     ca: fs.readFileSync(ormConfig.ssl.ca, 'utf-8'),
