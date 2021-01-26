@@ -1,11 +1,11 @@
+import { promises as FsPromises } from 'fs';
+import { TlsOptions } from 'tls';
 import { createConnection, Connection, ObjectType } from 'typeorm';
 import config from 'config';
 import { delay, inject, injectable } from 'tsyringe';
 import { MCLogger } from '@map-colonies/mc-logger';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { StatusesRepository } from './statusesRepository';
-import { promises as FsPromises } from 'fs';
-import { TlsOptions } from 'tls';
 
 @injectable()
 export class ConnectionManager {
@@ -18,7 +18,6 @@ export class ConnectionManager {
   private async initSSLConnection(connectionConfig : PostgresConnectionOptions): Promise<void> {
     const tlsConfigurations = connectionConfig.ssl as TlsOptions;
     if (
-      tlsConfigurations !== undefined &&
       tlsConfigurations.ca &&
       tlsConfigurations.cert &&
       tlsConfigurations.key
@@ -29,9 +28,9 @@ export class ConnectionManager {
         FsPromises.readFile(tlsConfigurations.cert as string, encoding),
         FsPromises.readFile(tlsConfigurations.key as string, encoding),
       ]);
-      tlsConfigurations.ca =  sslFiles[0],
-      tlsConfigurations.cert = sslFiles[1],
-      tlsConfigurations.key = sslFiles[2] 
+      tlsConfigurations.ca =  sslFiles[0];
+      tlsConfigurations.cert = sslFiles[1];
+      tlsConfigurations.key = sslFiles[2];
     }
   }
 
