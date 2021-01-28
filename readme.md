@@ -4,8 +4,14 @@ A service that exposes a gateway to the export-request statuses storage.
 
 # Notes
 
-Please run `npm run migration` and commit changes before every tag (`npm run release`).
-this is required to keep db updates match the service version
+When tagging if the DB schema has change since the last tag a migration must be created with the following steps:
+1. manually increment the service version
+1. create new empty postgres DB and set update default.json config to connect to it.
+1. run ```npm run migration:run``` to build db schema up to the last migration.
+1. run ```npm migration:create``` to generate new migration file.
+1. commit changes to git.
+1. run ```npm run release -- --release-as <version>``` to prevent double bumping.
+1. push tag to origin (release command show the command in its output)
 
 # Usage
 1. Run `npm install `.
