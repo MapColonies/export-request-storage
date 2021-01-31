@@ -10,8 +10,7 @@ When tagging if the DB schema has change since the last tag a migration must be 
 1. run ```npm run migration:run``` to build db schema up to the last migration.
 1. run ```npm migration:create``` to generate new migration file.
 1. commit changes to git.
-1. run ```npm run release -- --release-as <version>``` to prevent double bumping.
-1. push tag to origin (release command show the command in its output)
+1. run ```npm run release -- --release-as <version>``` to prevent double bumping and follow release instructions.
 
 # Usage
 1. Run `npm install `.
