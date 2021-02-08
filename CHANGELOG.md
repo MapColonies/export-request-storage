@@ -15,13 +15,6 @@ All notable changes to this project will be documented in this file. See [standa
 * **migration:** fixed migration script  ([#35](https://github.com/MapColonies/export-request-storage/issues/35)) ([8b2fb75](https://github.com/MapColonies/export-request-storage/commit/8b2fb7536bc5bb46937b2376246f426322ac1e38))
 
 
-## 1.2.0 (2021-01-27)
-
-
-### Features
-
-* ssl support added ([#30](https://github.com/MapColonies/export-request-storage/issues/30)) ([4bc644a](https://github.com/MapColonies/export-request-storage/commit/4bc644a62820ba4ec8058c2539cdef1afc337df8))
-
 ## 1.1.0 (2021-01-07)
 
 
