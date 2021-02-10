@@ -62,8 +62,10 @@ export class ConnectionManager {
       tlsConfigurations.ca = sslFiles[0];
       tlsConfigurations.cert = sslFiles[1];
       tlsConfigurations.key = sslFiles[2];
+      this.logger.info(`Succesfully loaded SSL configurations`);
     } else {
       (connectionConfig.ssl as boolean) = false;
+      this.logger.info(`No SSL configurations received`);
     }
   }
 
