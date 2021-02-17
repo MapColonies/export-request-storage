@@ -14,13 +14,20 @@
       "username": "{{ getv "/configuration/db/username" "export_request_admin" }}",
       "password": "{{ getv "/configuration/db/password" "1234" }}",
       "database": "{{ getv "/configuration/db/database" "export-request" }}",
-      "synchronize": {{ getv "/configuration/db/synchronize" "true" }},
+      "synchronize": {{ getv "/configuration/db/synchronize" "false" }},
       "logging": {{ getv "/configuration/db/logging" "false" }},
+      "ssl": {
+         "rejectUnauthorized": {{ getv "/configuration/db/ssl/reject/unauthorized" "false" }},
+         "ca": {{ getv "/configuration/db/ssl/ca" "null" }},
+         "key": {{ getv "/configuration/db/ssl/key" "null" }},
+         "cert": {{ getv "/configuration/db/ssl/cert" "null" }}
+      },
       "entities": [
          "dist/src/entity/**/*.js"
       ],
       "migrations": [
-         "dist/src/migration/**/*.js"
+         "dist/src/migration/**/*.js",
+         "src/migration/**/*.ts"
       ],
       "subscribers": [
          "dist/src/subscriber/**/*.js"
