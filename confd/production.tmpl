@@ -16,7 +16,8 @@
       "database": "{{ getv "/configuration/db/database" "export-request" }}",
       "synchronize": {{ getv "/configuration/db/synchronize" "false" }},
       "logging": {{ getv "/configuration/db/logging" "false" }},
-      "ssl": {
+      "enableSslAuth": {{ getv "/configuration/db/ssl/enable" "false" }},
+      "sslPaths": {
          "ca": {{ getv "/configuration/db/ssl/ca" "null" }},
          "key": {{ getv "/configuration/db/ssl/key" "null" }},
          "cert": {{ getv "/configuration/db/ssl/cert" "null" }}

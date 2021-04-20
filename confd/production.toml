@@ -14,6 +14,7 @@ keys = [
     "/configuration/db/database",
     "/configuration/db/synchronize",
     "/configuration/db/logging",
+    "/configuration/db/ssl/enable",
     "/configuration/db/ssl/ca",
     "/configuration/db/ssl/key",
     "/configuration/db/ssl/cert",
