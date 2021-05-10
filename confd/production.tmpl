@@ -18,9 +18,9 @@
       "logging": {{ getv "/configuration/db/logging" "false" }},
       "enableSslAuth": {{ getv "/configuration/db/ssl/enable" "false" }},
       "sslPaths": {
-         "ca": {{ getv "/configuration/db/ssl/ca" "null" }},
-         "key": {{ getv "/configuration/db/ssl/key" "null" }},
-         "cert": {{ getv "/configuration/db/ssl/cert" "null" }}
+         "ca": "{{ getv "/configuration/db/ssl/ca" "null" }}",
+         "key": "{{ getv "/configuration/db/ssl/key" "null" }}",
+         "cert": "{{ getv "/configuration/db/ssl/cert" "null" }}"
       },
       "entities": [
          "dist/src/entity/**/*.js"
