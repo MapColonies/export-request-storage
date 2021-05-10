@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/MapColonies/export-request-storage/compare/v1.3.0...v1.3.1) (2021-05-10)
+
+
+### Bug Fixes
+
+* **confd:** fix config string quote ([#56](https://github.com/MapColonies/export-request-storage/issues/56)) ([f95be41](https://github.com/MapColonies/export-request-storage/commit/f95be4198621b5011ef43527c1084f8c4ab99a58))
+* changelog is bugged ([#38](https://github.com/MapColonies/export-request-storage/issues/38)) ([e0f6685](https://github.com/MapColonies/export-request-storage/commit/e0f6685ca56d15fc0683c94d9f1625adf27c6d38))
+* fixed migration config ([#47](https://github.com/MapColonies/export-request-storage/issues/47)) ([6162e28](https://github.com/MapColonies/export-request-storage/commit/6162e2824734ae335c139fad6df253162767c952))
+* migration and ssl configurations ([#40](https://github.com/MapColonies/export-request-storage/issues/40)) ([b1e466f](https://github.com/MapColonies/export-request-storage/commit/b1e466fadbe4f9c7bb4da18d7c7b087f894ea5c4))
+* upgrade config from 3.3.1 to 3.3.3 ([#24](https://github.com/MapColonies/export-request-storage/issues/24)) ([cb3189e](https://github.com/MapColonies/export-request-storage/commit/cb3189ee1aa56de1decdbfa8bec49a33d95c6527))
+* upgrade openapi-validator-middleware from 3.1.1 to 3.2.0 ([#25](https://github.com/MapColonies/export-request-storage/issues/25)) ([a624cfd](https://github.com/MapColonies/export-request-storage/commit/a624cfd607c1d02c848625f1d29d6a1b9be325d2))
+* upgrade pg from 8.3.3 to 8.5.1 ([#22](https://github.com/MapColonies/export-request-storage/issues/22)) ([6ae888b](https://github.com/MapColonies/export-request-storage/commit/6ae888bdd145311249aa57c9b81d6a5bcceecb97))
+* upgrade tsyringe from 4.3.0 to 4.4.0 ([#26](https://github.com/MapColonies/export-request-storage/issues/26)) ([7caf477](https://github.com/MapColonies/export-request-storage/commit/7caf4772110fccc77580389388f4a546976263c0))
+* upgrade typeorm from 0.2.26 to 0.2.29 ([#23](https://github.com/MapColonies/export-request-storage/issues/23)) ([4a4ef9c](https://github.com/MapColonies/export-request-storage/commit/4a4ef9c92bd5567ceb03d297555ab918f1c6eeb7))
+
 ## 1.3.0 (2021-02-02)
 
 
